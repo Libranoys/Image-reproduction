@@ -13,7 +13,7 @@ object main extends App {
 
   val filename = "img_in.jpg"
   val MAX_POP = 50
-  val SIZE = (400, 328)
+  val SIZE = (500, 500)
 
   val IMAGE_TEST = new BufferedImage(SIZE._1, SIZE._2, BufferedImage.TYPE_INT_RGB)
   val CANVAS_TEST = IMAGE_TEST.createGraphics

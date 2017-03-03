@@ -21,8 +21,8 @@ class Cercle(x: Double, y: Double, r: Double, c: Color) extends Individu {
       else if (r < 1) this.color = new Color(this.color.getRed, this.color.getGreen, this.color.getBlue, rand.nextInt(255))
     } else {
       if (r < 1.33) this.rayon = rand.nextInt(100)
-      else if (r < 1.66) this.xPos = rand.nextInt(400)
-      else if (r < 2) this.yPos = rand.nextInt(328)
+      else if (r < 1.66) this.xPos = rand.nextInt(500)
+      else if (r < 2) this.yPos = rand.nextInt(500)
 
     }
   }
