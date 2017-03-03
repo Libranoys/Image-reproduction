@@ -8,11 +8,12 @@ import java.awt.Color
 import java.awt.geom.Ellipse2D
 import classes.Engine
 
+
 object main extends App {
 
-  val filename = "joconde.jpg"
+  val filename = "img_in.jpg"
   val MAX_POP = 50
-  val SIZE = (500, 500)
+  val SIZE = (400, 328)
 
   val IMAGE_TEST = new BufferedImage(SIZE._1, SIZE._2, BufferedImage.TYPE_INT_RGB)
   val CANVAS_TEST = IMAGE_TEST.createGraphics
@@ -27,15 +28,18 @@ object main extends App {
 
   val rand = new Random
 
-  var DNA_BEST = new Cercle(rand.nextInt(SIZE._1), rand.nextInt(SIZE._2), rand.nextInt(50), new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)))
-  var DNA_TEST = new Cercle(0, 0, 0, Color.WHITE)
+  var DNA_BEST = DNA.initDna(MAX_POP, SIZE)
+  var DNA_TEST = DNA.initDna(MAX_POP, SIZE)
   DNA.copyDNA(DNA_BEST, DNA_TEST)
   
-  DNA_BEST.draw(CANVAS_BEST)
-  DNA_TEST.draw(CANVAS_TEST)
-  
+  DNA.drawDNA(CANVAS_BEST, DNA_BEST, IMAGE_BEST.getWidth, IMAGE_BEST.getHeight)
+  DNA.drawDNA(CANVAS_TEST, DNA_TEST, IMAGE_TEST.getWidth, IMAGE_TEST.getHeight)
+
   val engine = new Engine(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT)
   engine.start
+  
+
+
   
   ImageIO.write(IMAGE_BEST, "png", new File("drawing.png"))
 
