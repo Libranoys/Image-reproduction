@@ -18,6 +18,7 @@ object main extends App {
 
   val ELLIPSE = 1
   val CERCLE = 2
+  val POLYGONE = 3
   var CHOICE = 1
 
   while (FILENAME == "") {
@@ -25,7 +26,7 @@ object main extends App {
     FILENAME = StdIn.readLine()
     print("Veuillez entrer un nombre d'itération (ex: 1000): ")
     ITERATION_NUMBER = StdIn.readInt()
-    print("Veuillez entrer le nombre coorespondant au type d'individu (1 => ELLIPSE, 2 => CERCLE): ")
+    print("Veuillez entrer le nombre coorespondant au type d'individu (1 => ELLIPSE, 2 => CERCLE, 3 => POLYGONE): ")
     CHOICE = StdIn.readInt()
   }
 
@@ -53,6 +54,7 @@ object main extends App {
 
   val engine = new Engine(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT, DNA_Factory)
   engine.start(ITERATION_NUMBER)
+  
 
   ImageIO.write(IMAGE_BEST, "png", new File(FILENAME + "out.png"))
 

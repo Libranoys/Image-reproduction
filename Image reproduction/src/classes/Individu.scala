@@ -4,6 +4,6 @@ import java.awt.Graphics2D
 
 trait Individu {
   def mutate
-  def copy : Individu
+ def copy : Individu
   def draw(g: Graphics2D)
 }

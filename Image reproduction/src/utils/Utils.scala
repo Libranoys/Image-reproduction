@@ -26,7 +26,7 @@ object Utils {
         val dr = cIn.getRed - c.getRed
         val db = cIn.getBlue - c.getBlue
         val dg = cIn.getGreen - c.getGreen
-        total += Math.abs(dg) + Math.abs(dr) + Math.abs(db)
+        total += Math.abs(dg)+Math.abs(db)+Math.abs(dr)
       }
     }
     total

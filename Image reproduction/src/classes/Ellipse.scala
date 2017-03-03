@@ -5,13 +5,14 @@ import java.awt.Graphics2D
 import java.awt.geom.Ellipse2D
 import scala.util.Random
 
-class Ellipse(x: Double, y: Double, w: Double, h: Double, c: Color) extends Individu {
+class Ellipse(x: Double, y: Double, w: Double, h: Double, c: Color, s:(Int, Int)) extends Individu {
 
   var width = w
   var height = h
   var xPos = x
   var yPos = y
   var color = c
+  val winSize = s
 
   def mutate(): Unit = {
     val rand = new Random
@@ -24,10 +25,10 @@ class Ellipse(x: Double, y: Double, w: Double, h: Double, c: Color) extends Indi
       else if (r < 1) this.color = new Color(this.color.getRed, this.color.getGreen, this.color.getBlue, rand.nextInt(255))
 
     } else {
-      if (r < 1.25) this.width = rand.nextInt(400)
-      else if (r < 1.5) this.height = rand.nextInt(328)
-      else if (r < 1.75) this.xPos = rand.nextInt(400)
-      else if (r < 2) this.yPos = rand.nextInt(328)
+      if (r < 1.25) this.width = rand.nextInt(this.winSize._1)
+      else if (r < 1.5) this.height = rand.nextInt(this.winSize._2)
+      else if (r < 1.75) this.xPos = rand.nextInt(this.winSize._1)
+      else if (r < 2) this.yPos = rand.nextInt(this.winSize._2)
     }
   }
 
@@ -37,6 +38,14 @@ class Ellipse(x: Double, y: Double, w: Double, h: Double, c: Color) extends Indi
   }
 
   def copy(): Ellipse = {
-    new Ellipse(this.xPos, this.yPos, this.width, this.height, this.color)
+    new Ellipse(this.xPos, this.yPos, this.width, this.height, this.color, this.winSize)
+  }
+}
+
+object EllipseFactory {
+  
+  def random(winSize : (Int, Int)) : Ellipse = {
+    val rand = new Random
+    new Ellipse(rand.nextInt(winSize._1), rand.nextInt(winSize._2), rand.nextInt(winSize._1), rand.nextInt(winSize._2), new Color(0,0,0, 0.1.asInstanceOf[Float]), winSize)
   }
 }
