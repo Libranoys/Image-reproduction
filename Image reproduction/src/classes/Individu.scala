@@ -1,8 +1,9 @@
 package classes
-
-
 import java.awt.Graphics
+import java.awt.Graphics2D
 
-class Individu {
-
+trait Individu {
+  def mutate
+  def copy : Individu
+  def draw(g: Graphics2D)
 }
