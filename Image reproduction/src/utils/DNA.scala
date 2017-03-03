@@ -24,14 +24,33 @@ class DNA(typeIndividu: Int) {
   }
 
   def copyGene(dna_in: Array[Individu], dna_out: Array[Individu], index: Int) = {
-    for(i <- 0 to dna_out(index).asInstanceOf[Polygone].xArray.size-1) {
+    typeIndiv match {
+      case 1 => {
+        dna_out(index).asInstanceOf[Ellipse].width = dna_in(index).asInstanceOf[Ellipse].width
+        dna_out(index).asInstanceOf[Ellipse].height = dna_in(index).asInstanceOf[Ellipse].height
+        dna_out(index).asInstanceOf[Ellipse].color = dna_in(index).asInstanceOf[Ellipse].color
+        dna_out(index).asInstanceOf[Ellipse].xPos = dna_in(index).asInstanceOf[Ellipse].xPos
+        dna_out(index).asInstanceOf[Ellipse].yPos = dna_in(index).asInstanceOf[Ellipse].yPos
+      }
+      case 2 => {
+        dna_out(index).asInstanceOf[Cercle].rayon = dna_in(index).asInstanceOf[Cercle].rayon
+        dna_out(index).asInstanceOf[Cercle].color = dna_in(index).asInstanceOf[Cercle].color
+        dna_out(index).asInstanceOf[Cercle].xPos = dna_in(index).asInstanceOf[Cercle].xPos
+        dna_out(index).asInstanceOf[Cercle].yPos = dna_in(index).asInstanceOf[Cercle].yPos
+      }
+
+      case 3 => {
+        for (i <- 0 to dna_out(index).asInstanceOf[Polygone].xArray.size - 1) {
           dna_out(index).asInstanceOf[Polygone].xArray(i) = dna_in(index).asInstanceOf[Polygone].xArray(i)
-    }
-    for(i <- 0 to dna_out(index).asInstanceOf[Polygone].yArray.size-1) {
+        }
+        for (i <- 0 to dna_out(index).asInstanceOf[Polygone].yArray.size - 1) {
           dna_out(index).asInstanceOf[Polygone].yArray(i) = dna_in(index).asInstanceOf[Polygone].yArray(i)
+        }
+        dna_out(index).asInstanceOf[Polygone].color = dna_in(index).asInstanceOf[Polygone].color
+        dna_out(index).asInstanceOf[Polygone].nbrCote = dna_in(index).asInstanceOf[Polygone].nbrCote
+      }
     }
-    dna_out(index).asInstanceOf[Polygone].color = dna_in(index).asInstanceOf[Polygone].color 
-    dna_out(index).asInstanceOf[Polygone].nbrCote = dna_in(index).asInstanceOf[Polygone].nbrCote 
+
   }
 
   def initDna(popSize: Int, winSize: (Int, Int)): Array[Individu] = {
