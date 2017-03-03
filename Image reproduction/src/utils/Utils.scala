@@ -15,7 +15,7 @@ object Utils {
 
   }
   
-  def calculFitness(img_input : BufferedImage, img : BufferedImage) : Long= {
+  def calculFitness(img : BufferedImage, img_input : BufferedImage) : Long= {
     var total = 0
     for(x <- 0 to img_input.getWidth-1) {
       for(y <- 0 to img_input.getHeight-1) {
