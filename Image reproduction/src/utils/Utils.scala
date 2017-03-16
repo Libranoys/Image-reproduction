@@ -9,9 +9,7 @@ import java.awt.image.ColorModel
 
 object Utils {
   def InitCanvas(g: Graphics2D, w: Int, h: Int) = {
-    g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING,
-      java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
-
+    g.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
     g.setColor(Color.WHITE)
     g.fillRect(0, 0, w, h)
 

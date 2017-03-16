@@ -22,7 +22,7 @@ object main extends App {
 
   var FILENAME = ""
 
-  val MAX_POP = 100
+  val MAX_POP = 50
   var ITERATION_NUMBER = 1000
 
   val ELLIPSE = 1
@@ -51,7 +51,7 @@ object main extends App {
 
   Utils.InitCanvas(CANVAS_TEST, IMAGE_TEST.getWidth, IMAGE_TEST.getHeight)
   Utils.InitCanvas(CANVAS_BEST, IMAGE_BEST.getWidth, IMAGE_BEST.getHeight)
-
+CANVAS_BEST.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
   val DNA_Factory = new DNA(CHOICE)
 
   val DNA_BEST = DNA_Factory.initDna(MAX_POP, SIZE)

@@ -19,8 +19,10 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
   var img_b = img_be
   val img_input = img_inp
   val DNA = d
-
+  
   val SIZE = (img_t.getWidth, img_t.getHeight)
+  val MAX = SIZE._1 * SIZE._2 * 3 * 255  
+  
   val frame = new JFrame
   frame.setTitle("Frame")
   frame.setSize(SIZE._1, SIZE._2)
@@ -46,7 +48,7 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
       modifs = modifs + 1
       DNA.copyGene(dna_t, dna_b, indexGene)
       DNA.drawDNA(img_b.getGraphics.asInstanceOf[Graphics2D], dna_b, img_b.getWidth, img_b.getHeight)
-      fitnessBest = fitnessTest
+      this.fitnessBest = fitnessTest
       doneSomething = true
     } else {
       DNA.copyGene(dna_b, dna_t, indexGene)
@@ -79,8 +81,8 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
       }
       frame.repaint()
       countIteration += 1
-      if (countIteration % 1 == 0)
-        println("Iteration num: " + 100 * (countIteration.toFloat / iteration.toFloat) + "% ; Mutation num: " + countMutation)
+      if (countIteration % 10 == 0)
+        println("Iteration num: " + 100 * (countIteration.toFloat / iteration.toFloat) + "% ; Mutation num: " + countMutation +" FITNESS: "+100*(1-(fitnessBest/MAX.asInstanceOf[Float]))+"%")
       //if(countIteration %50==0)
       // ImageIO.write(img_b, "png", new File(countIteration + "out.png"))
     }
