@@ -50,7 +50,8 @@ class DNA(typeIndividu: Int) {
         dna_out(index).asInstanceOf[Polygone].nbrCote = dna_in(index).asInstanceOf[Polygone].nbrCote
       }
     }
-
+    //dna_out(index) = dna_in(index).copy
+    dna_out
   }
 
   def initDna(popSize: Int, winSize: (Int, Int)): Array[Individu] = {

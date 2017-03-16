@@ -9,7 +9,7 @@ class Polygone(vertexA: Array[(Int, Int)], c: Color, s: (Int, Int)) extends Indi
   var color = c
   var nbrCote = this.vertexArray.size
   val winSize = s
-  
+
   //Initalisations du tableaux de vertices
   var xArray = new Array[Int](this.nbrCote)
   var yArray = new Array[Int](this.nbrCote)
@@ -24,7 +24,12 @@ class Polygone(vertexA: Array[(Int, Int)], c: Color, s: (Int, Int)) extends Indi
   }
 
   def copy: Polygone = {
-    new Polygone(this.vertexArray, this.color, this.winSize)
+    val newVertexArray = new Array[(Int, Int)](this.nbrCote)
+    
+    for(vertexIndex <- 0 to newVertexArray.size-1) {
+      newVertexArray(vertexIndex) = (xArray(vertexIndex), yArray(vertexIndex))
+    }
+    new Polygone(newVertexArray, new Color(this.color.getRGB), this.winSize)
   }
 
   def mutate = {

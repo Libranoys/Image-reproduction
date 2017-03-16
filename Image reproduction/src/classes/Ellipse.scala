@@ -37,7 +37,7 @@ class Ellipse(x: Double, y: Double, w: Double, h: Double, c: Color, s:(Int, Int)
     g.fill(new Ellipse2D.Double(this.xPos - (this.height / 2), this.yPos - (this.width / 2), this.width, this.height))
   }
 
-  def copy(): Ellipse = {
+  def copy: Ellipse = {
     new Ellipse(this.xPos, this.yPos, this.width, this.height, this.color, this.winSize)
   }
 }

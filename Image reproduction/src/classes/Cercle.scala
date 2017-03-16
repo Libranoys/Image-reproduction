@@ -34,14 +34,14 @@ class Cercle(x: Double, y: Double, r: Double, c: Color, s: (Int, Int)) extends I
   }
   
   def copy : Cercle= {
-    new Cercle(this.x, this.y, this.r, this.c, this.winSize)    
+    new Cercle(this.xPos, this.yPos, this.rayon, this.color, this.winSize)    
   }
 }
 
 object CercleFactory {
   def random(winSize:(Int, Int)) : Cercle  = {
     val rand = new Random
-    new Cercle(rand.nextInt(winSize._1), rand.nextInt(winSize._2), rand.nextInt(Math.min(winSize._1, winSize._2)), new Color(1, 1, 1, 0.1.asInstanceOf[Float]), winSize)
+    new Cercle(rand.nextInt(winSize._1), rand.nextInt(winSize._2), rand.nextInt(Math.min(winSize._1, winSize._2)), new Color(0,0 , 0, 0.1.asInstanceOf[Float]), winSize)
     
   }
 }

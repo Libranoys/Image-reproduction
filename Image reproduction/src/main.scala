@@ -8,12 +8,21 @@ import java.awt.Color
 import java.awt.geom.Ellipse2D
 import classes.Engine
 import scala.io.StdIn
+import java.io.BufferedWriter
+import java.io.FileWriter
+import classes.Polygone
+import classes.Polygone
+import javax.swing.JFrame
+import javax.swing.JLabel
+import javax.swing.ImageIcon
+import javax.swing.JPanel
+import java.awt.GridLayout
 
 object main extends App {
 
   var FILENAME = ""
 
-  val MAX_POP = 50
+  val MAX_POP = 100
   var ITERATION_NUMBER = 1000
 
   val ELLIPSE = 1
@@ -34,10 +43,10 @@ object main extends App {
 
   val SIZE = (IMAGE_INPUT.getWidth, IMAGE_INPUT.getHeight)
 
-  val IMAGE_TEST = new BufferedImage(SIZE._1, SIZE._2, BufferedImage.TYPE_INT_RGB)
+  val IMAGE_TEST = new BufferedImage(SIZE._1, SIZE._2, BufferedImage.TYPE_INT_ARGB)
   val CANVAS_TEST = IMAGE_TEST.createGraphics
 
-  val IMAGE_BEST = new BufferedImage(SIZE._1, SIZE._2, BufferedImage.TYPE_INT_RGB)
+  val IMAGE_BEST = new BufferedImage(SIZE._1, SIZE._2, BufferedImage.TYPE_INT_ARGB)
   val CANVAS_BEST = IMAGE_BEST.createGraphics
 
   Utils.InitCanvas(CANVAS_TEST, IMAGE_TEST.getWidth, IMAGE_TEST.getHeight)
@@ -45,8 +54,8 @@ object main extends App {
 
   val DNA_Factory = new DNA(CHOICE)
 
-  var DNA_BEST = DNA_Factory.initDna(MAX_POP, SIZE)
-  var DNA_TEST = DNA_Factory.initDna(MAX_POP, SIZE)
+  val DNA_BEST = DNA_Factory.initDna(MAX_POP, SIZE)
+  val DNA_TEST = DNA_Factory.initDna(MAX_POP, SIZE)
   DNA_Factory.copyDNA(DNA_BEST, DNA_TEST)
 
   DNA_Factory.drawDNA(CANVAS_BEST, DNA_BEST, IMAGE_BEST.getWidth, IMAGE_BEST.getHeight)
@@ -55,7 +64,6 @@ object main extends App {
   val engine = new Engine(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT, DNA_Factory)
   engine.start(ITERATION_NUMBER)
   
-
   ImageIO.write(IMAGE_BEST, "png", new File(FILENAME + "out.png"))
 
 }
