@@ -10,9 +10,11 @@ import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.ImageIcon
 import javax.swing.JPanel
+import javax.swing.JButton
 
 class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedImage, img_be: BufferedImage, img_inp: BufferedImage, d: DNA) {
 
+  var timeBegin = System.currentTimeMillis()
   var dna_t = dna_te
   var dna_b = dna_be
   var img_t = img_te
@@ -28,6 +30,11 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
   frame.setSize(SIZE._1, SIZE._2)
   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
   var label = new JLabel(new ImageIcon(img_b))
+  
+  var time : List[Long] = List()
+  var fitness : List[Double] = List()
+  var mutations : List[Int] = List()
+  var iterations : List[Int] = List()
 
   val panel = new JPanel
 
@@ -62,8 +69,8 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
     panel.setLayout(null)
 
     label.setBounds(0, 0, SIZE._1, SIZE._2)
-
     panel.add(label)
+
     //panel.add(label2)
     frame.add(panel)
     frame.setFocusable(true)
@@ -81,9 +88,19 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
       }
       frame.repaint()
       countIteration += 1
-      if (countIteration % 10 == 0)
+      val step = if ((iteration/1000) < 10)
+          10 
+      else 
+        iteration/1500
+        
+      if (countIteration % step == 0) {
+        var timeAfter= System.currentTimeMillis()
+        time = time ++ List(timeAfter-timeBegin)
+        iterations = iterations ++ List(countIteration)
+        mutations = mutations++ List(countMutation)
+        fitness = fitness ++ List((1-(fitnessBest/MAX.asInstanceOf[Float])).asInstanceOf[Double])
         println("Iteration num: " + 100 * (countIteration.toFloat / iteration.toFloat) + "% ; Mutation num: " + countMutation +" FITNESS: "+100*(1-(fitnessBest/MAX.asInstanceOf[Float]))+"%")
-      //if(countIteration %50==0)
+      }//if(countIteration %50==0)
       // ImageIO.write(img_b, "png", new File(countIteration + "out.png"))
     }
   }

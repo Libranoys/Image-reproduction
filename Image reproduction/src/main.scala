@@ -17,6 +17,8 @@ import javax.swing.JLabel
 import javax.swing.ImageIcon
 import javax.swing.JPanel
 import java.awt.GridLayout
+import com.github.tototoshi.csv.CSVWriter
+import scala.collection.mutable.ListBuffer
 
 object main extends App {
 
@@ -38,6 +40,8 @@ object main extends App {
     print("Veuillez entrer le nombre coorespondant au type d'individu (1 => ELLIPSE, 2 => CERCLE, 3 => POLYGONE): ")
     CHOICE = StdIn.readInt()
   }
+  
+  val name = FILENAME.substring(0, FILENAME.lastIndexOf('.'))
 
   val IMAGE_INPUT = ImageIO.read(new File(FILENAME))
 
@@ -64,6 +68,19 @@ CANVAS_BEST.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.
   val engine = new Engine(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT, DNA_Factory)
   engine.start(ITERATION_NUMBER)
   
-  ImageIO.write(IMAGE_BEST, "png", new File(FILENAME + "out.png"))
+  // Sauvegarde données pour test
+  val f = new File(name + "_datas.csv")
+  val writer = CSVWriter.open(f)
+  val csvschema = List("time", "iterations", "mutations", "fitness")
+  var listRecords : List[List[Any]] = List()
+  listRecords = listRecords ++ List(csvschema)
+  for (i <- 0 to engine.time.length-1) {
+    listRecords = listRecords ++ List(List(engine.time(i), engine.iterations(i), engine.mutations(i), engine.fitness(i)))
+  }
+  writer.writeAll(listRecords)
+  writer.close
+  
+  
+  ImageIO.write(IMAGE_BEST, "png", new File(name + "_out.png"))
 
 }
