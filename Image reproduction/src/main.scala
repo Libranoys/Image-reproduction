@@ -25,7 +25,7 @@ object main extends App {
 
   var FILENAME = ""
 
-  val MAX_POP = 50
+  var MAX_POP = 50
   var ITERATION_NUMBER = 1000
 
   val ELLIPSE = 1
@@ -34,6 +34,7 @@ object main extends App {
   var CHOICE = 1
 
   var rendu = ""
+  var confirm = ""
 
   while (FILENAME == "") {
     print("Veuillez entrer le nom d'une image (ex: joconde.jpg): ")
@@ -42,10 +43,29 @@ object main extends App {
     ITERATION_NUMBER = StdIn.readInt()
     print("Veuillez entrer le nombre coorespondant au type d'individu (1 => ELLIPSE, 2 => CERCLE, 3 => POLYGONE): ")
     CHOICE = StdIn.readInt()
+    print("Veuillez entrer le nombre d'individu: ")
+    MAX_POP = StdIn.readInt()
     print("Voulez-vous afficher voir le rendu en temps reel ? (y, n)")
     rendu = StdIn.readLine().trim()
     if (rendu.toLowerCase() != "y" && rendu.toLowerCase() != "n") {
       println("Veuillez rentrer une entrée correct")
+      System.exit(1)
+    }
+    
+    val shape_intro = CHOICE match {
+      case ELLIPSE  => "Ellipse"
+      case POLYGONE => "Polygone"
+      case CERCLE   => "Cercle"
+    }
+    val win_intro = rendu match {
+      case "y" => "Avec fenetre"
+      case "n" => "Sans fenetre"
+    }
+
+    println("Résumé : \nImage : "+FILENAME+"\nNombre d'itérations : "+ITERATION_NUMBER+"\nForme: "+shape_intro+"\nPopulation : "+MAX_POP+"\n"+win_intro+"\nConfirmation ? (y, n)")
+    confirm = StdIn.readLine().trim()
+    if (confirm.toLowerCase() != "y") {
+      println("Veuillez recommencez")
       System.exit(1)
     }
   }
