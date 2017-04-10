@@ -42,12 +42,13 @@ object Utils {
   }
 
   def save(img: BufferedImage, mutations: Int, nb: Int) : Boolean = {
-    if((nb%20==0) && nb < 1000) {
+    println(nb)
+    if((mutations%20==0) && mutations < 1000) {
       ImageIO.write(img, "png", new File("img_"+nb+".png"))
-      true
-    }else if((nb%150==0) && nb >=1000) {
+      return true
+    }else if((mutations%150==0) && mutations >=1000) {
       ImageIO.write(img, "png", new File("img_"+nb+".png"))
-      true
+      return true
     }
     
     false
