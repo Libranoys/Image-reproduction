@@ -31,6 +31,7 @@ object main extends App {
   val CERCLE = 2
   val POLYGONE = 3
   var CHOICE = 1
+  
 
   while (FILENAME == "") {
     print("Veuillez entrer le nom d'une image (ex: joconde.jpg): ")
@@ -39,6 +40,11 @@ object main extends App {
     ITERATION_NUMBER = StdIn.readInt()
     print("Veuillez entrer le nombre coorespondant au type d'individu (1 => ELLIPSE, 2 => CERCLE, 3 => POLYGONE): ")
     CHOICE = StdIn.readInt()
+  }
+  val shape_name = CHOICE match {
+    case ELLIPSE => "el"
+    case POLYGONE => "po"        
+    case CERCLE => "ce"
   }
   
   val name = FILENAME.substring(0, FILENAME.lastIndexOf('.'))
@@ -69,7 +75,7 @@ CANVAS_BEST.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.
   engine.start(ITERATION_NUMBER)
   
   // Sauvegarde données pour test
-  val f = new File(name + "_datas.csv")
+  val f = new File(name + "_"+shape_name+"_datas.csv")
   val writer = CSVWriter.open(f)
   val csvschema = List("time", "iterations", "mutations", "fitness")
   var listRecords : List[List[Any]] = List()

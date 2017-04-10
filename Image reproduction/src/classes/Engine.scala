@@ -88,12 +88,12 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
       }
       frame.repaint()
       countIteration += 1
-      val step = if ((iteration/1000) < 10)
+      /*val step = if ((iteration/1000) < 10)
           10 
       else 
-        iteration/1500
+        iteration/1500*/
         
-      if (countIteration % step == 0) {
+      if (countIteration % 10 == 0) {
         var timeAfter= System.currentTimeMillis()
         time = time ++ List(timeAfter-timeBegin)
         iterations = iterations ++ List(countIteration)
