@@ -19,6 +19,7 @@ import javax.swing.JPanel
 import java.awt.GridLayout
 import com.github.tototoshi.csv.CSVWriter
 import scala.collection.mutable.ListBuffer
+import classes.EngineWoWin
 
 object main extends App {
 
@@ -31,7 +32,8 @@ object main extends App {
   val CERCLE = 2
   val POLYGONE = 3
   var CHOICE = 1
-  
+
+  var rendu = ""
 
   while (FILENAME == "") {
     print("Veuillez entrer le nom d'une image (ex: joconde.jpg): ")
@@ -40,13 +42,19 @@ object main extends App {
     ITERATION_NUMBER = StdIn.readInt()
     print("Veuillez entrer le nombre coorespondant au type d'individu (1 => ELLIPSE, 2 => CERCLE, 3 => POLYGONE): ")
     CHOICE = StdIn.readInt()
+    print("Voulez-vous afficher voir le rendu en temps reel ? (y, n)")
+    rendu = StdIn.readLine().trim()
+    if (rendu.toLowerCase() != "y" && rendu.toLowerCase() != "n") {
+      println("Veuillez rentrer une entrée correct")
+      System.exit(1)
+    }
   }
   val shape_name = CHOICE match {
-    case ELLIPSE => "el"
-    case POLYGONE => "po"        
-    case CERCLE => "ce"
+    case ELLIPSE  => "el"
+    case POLYGONE => "po"
+    case CERCLE   => "ce"
   }
-  
+
   val name = FILENAME.substring(0, FILENAME.lastIndexOf('.'))
 
   val IMAGE_INPUT = ImageIO.read(new File(FILENAME))
@@ -61,7 +69,7 @@ object main extends App {
 
   Utils.InitCanvas(CANVAS_TEST, IMAGE_TEST.getWidth, IMAGE_TEST.getHeight)
   Utils.InitCanvas(CANVAS_BEST, IMAGE_BEST.getWidth, IMAGE_BEST.getHeight)
-CANVAS_BEST.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
+  CANVAS_BEST.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
   val DNA_Factory = new DNA(CHOICE)
 
   val DNA_BEST = DNA_Factory.initDna(MAX_POP, SIZE)
@@ -71,22 +79,49 @@ CANVAS_BEST.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.
   DNA_Factory.drawDNA(CANVAS_BEST, DNA_BEST, IMAGE_BEST.getWidth, IMAGE_BEST.getHeight)
   DNA_Factory.drawDNA(CANVAS_TEST, DNA_TEST, IMAGE_TEST.getWidth, IMAGE_TEST.getHeight)
 
-  val engine = new Engine(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT, DNA_Factory)
-  engine.start(ITERATION_NUMBER)
-  
-  // Sauvegarde données pour test
-  val f = new File(name + "_"+shape_name+"_datas.csv")
-  val writer = CSVWriter.open(f)
-  val csvschema = List("time", "iterations", "mutations", "fitness")
-  var listRecords : List[List[Any]] = List()
-  listRecords = listRecords ++ List(csvschema)
-  for (i <- 0 to engine.time.length-1) {
-    listRecords = listRecords ++ List(List(engine.time(i), engine.iterations(i), engine.mutations(i), engine.fitness(i)))
+  val window = rendu match {
+    case "y" => true
+    case "n" => false
   }
-  writer.writeAll(listRecords)
-  writer.close
   
-  
-  ImageIO.write(IMAGE_BEST, "png", new File(name + "_out.png"))
+  val dir = new File("img_out")
+  dir.mkdir()
+
+  val engine = new Engine(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT, DNA_Factory)
+  if (window) {
+    val engine = new Engine(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT, DNA_Factory)
+    engine.start(ITERATION_NUMBER)
+
+    // Sauvegarde données pour test
+    val f = new File(name + "_" + shape_name + "_datas.csv")
+    val writer = CSVWriter.open(f)
+    val csvschema = List("time", "iterations", "mutations", "fitness")
+    var listRecords: List[List[Any]] = List()
+    listRecords = listRecords ++ List(csvschema)
+    for (i <- 0 to engine.time.length - 1) {
+      listRecords = listRecords ++ List(List(engine.time(i), engine.iterations(i), engine.mutations(i), engine.fitness(i)))
+    }
+    writer.writeAll(listRecords)
+    writer.close
+
+    ImageIO.write(IMAGE_BEST, "png", new File(name + "_out.png"))
+  } else {
+    val engine = new EngineWoWin(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT, DNA_Factory)
+    engine.start(ITERATION_NUMBER)
+
+    // Sauvegarde données pour test
+    val f = new File(name + "_" + shape_name + "_datas.csv")
+    val writer = CSVWriter.open(f)
+    val csvschema = List("time", "iterations", "mutations", "fitness")
+    var listRecords: List[List[Any]] = List()
+    listRecords = listRecords ++ List(csvschema)
+    for (i <- 0 to engine.time.length - 1) {
+      listRecords = listRecords ++ List(List(engine.time(i), engine.iterations(i), engine.mutations(i), engine.fitness(i)))
+    }
+    writer.writeAll(listRecords)
+    writer.close
+
+    ImageIO.write(IMAGE_BEST, "png", new File(name + "_out.png"))
+  }
 
 }

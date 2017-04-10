@@ -26,18 +26,20 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
   val SIZE = (img_t.getWidth, img_t.getHeight)
   val MAX = SIZE._1 * SIZE._2 * 3 * 255  
   
+
   val frame = new JFrame
   frame.setTitle("Frame")
   frame.setSize(SIZE._1, SIZE._2)
   frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
   var label = new JLabel(new ImageIcon(img_b))
   
+  val panel = new JPanel
+
   var time : List[Long] = List()
   var fitness : List[Double] = List()
   var mutations : List[Int] = List()
   var iterations : List[Int] = List()
 
-  val panel = new JPanel
 
   var modifs = 0
 
@@ -51,7 +53,9 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
     val fitnessTest = Utils.calculFitness(img_t, img_input)
     if (fitnessTest < fitnessBest) {
 
+
       label = new JLabel(new ImageIcon(img_b))
+      
 
       modifs = modifs + 1
       DNA.copyGene(dna_t, dna_b, indexGene)
