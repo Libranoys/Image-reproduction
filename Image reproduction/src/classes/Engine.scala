@@ -21,6 +21,7 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
   var img_b = img_be
   val img_input = img_inp
   val DNA = d
+  var nb_save = 0
   
   val SIZE = (img_t.getWidth, img_t.getHeight)
   val MAX = SIZE._1 * SIZE._2 * 3 * 255  
@@ -92,7 +93,8 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
           10 
       else 
         iteration/1500*/
-        
+      if(Utils.save(this.img_b, countMutation, nb_save))
+        nb_save +=1
       if (countIteration % 10 == 0) {
         var timeAfter= System.currentTimeMillis()
         time = time ++ List(timeAfter-timeBegin)

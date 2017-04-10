@@ -6,6 +6,8 @@ import java.awt.Color
 import java.awt.image.BufferedImage
 import classes.Cercle
 import java.awt.image.ColorModel
+import javax.imageio.ImageIO
+import java.io.File
 
 object Utils {
   def InitCanvas(g: Graphics2D, w: Int, h: Int) = {
@@ -39,5 +41,17 @@ object Utils {
     return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
   }
 
+  def save(img: BufferedImage, mutations: Int, nb: Int) : Boolean = {
+    if((nb%20==0) && nb < 1000) {
+      ImageIO.write(img, "png", new File("img_"+nb+".png"))
+      true
+    }else if((nb%150==0) && nb >=1000) {
+      ImageIO.write(img, "png", new File("img_"+nb+".png"))
+      true
+    }
+    
+    false
+    
+  }
 
 }
