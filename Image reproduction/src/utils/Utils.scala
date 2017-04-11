@@ -41,17 +41,12 @@ object Utils {
     return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
   }
 
-  def save(img: BufferedImage, mutations: Int, nb: Int) : Boolean = {
-    if((mutations%20==0) && mutations < 1000) {
-      ImageIO.write(img, "png", new File("img_out/img_"+nb+".png"))
-      return true
-    }else if((mutations%150==0) && mutations >=1000) {
-      ImageIO.write(img, "png", new File("img_out/img_"+nb+".png"))
+  def save(img: BufferedImage, mutations: Int, nb: Int, iterations: Int) : Boolean = {
+    if(((mutations%20==0) && mutations < 1000) || ((mutations%150==0) && mutations >=1000)) {
+      ImageIO.write(img, "png", new File("img_out/img_"+nb+"-iter_"+iterations+".png"))
       return true
     }
-    
     false
-    
   }
 
 }

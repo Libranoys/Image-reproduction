@@ -68,7 +68,7 @@ class EngineWoWin(dna_te: Array[Individu], dna_be: Array[Individu], img_te: Buff
           10 
       else 
         iteration/1500*/
-      if(Utils.save(this.img_b, countMutation, nb_save)) { 
+      if(Utils.save(this.img_b, countMutation, nb_save, countIteration)) { 
         nb_save +=1
       }
       if (countIteration % 10 == 0) {
