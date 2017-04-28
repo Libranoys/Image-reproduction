@@ -37,7 +37,7 @@ object main extends App {
   var confirm = ""
 
   while (FILENAME == "") {
-    print("Veuillez entrer le nom d'une image (ex: joconde.jpg): ")
+    print("Veuillez entrer le nom d'une image (ex: joconde.png): ")
     FILENAME = StdIn.readLine()
     print("Veuillez entrer un nombre d'itération (ex: 1000): ")
     ITERATION_NUMBER = StdIn.readInt()
@@ -89,7 +89,7 @@ object main extends App {
 
   Utils.InitCanvas(CANVAS_TEST, IMAGE_TEST.getWidth, IMAGE_TEST.getHeight)
   Utils.InitCanvas(CANVAS_BEST, IMAGE_BEST.getWidth, IMAGE_BEST.getHeight)
-  CANVAS_BEST.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
+  
   val DNA_Factory = new DNA(CHOICE)
 
   val DNA_BEST = DNA_Factory.initDna(MAX_POP, SIZE)
@@ -104,8 +104,10 @@ object main extends App {
     case "n" => false
   }
   
-  val dir = new File("img_out")
-  dir.mkdir()
+  // Si on active la sauvegarde regulire d'images (dans Engine)
+  
+  /* val dir = new File("img_out")
+  dir.mkdir() */
 
   val engine = new Engine(DNA_TEST, DNA_BEST, IMAGE_TEST, IMAGE_BEST, IMAGE_INPUT, DNA_Factory)
   if (window) {
@@ -113,6 +115,7 @@ object main extends App {
     engine.start(ITERATION_NUMBER)
 
     // Sauvegarde données pour test
+    /*
     val f = new File(name + "_" + shape_name + "_datas.csv")
     val writer = CSVWriter.open(f)
     val csvschema = List("time", "iterations", "mutations", "fitness")
@@ -123,6 +126,7 @@ object main extends App {
     }
     writer.writeAll(listRecords)
     writer.close
+    */
 
     ImageIO.write(IMAGE_BEST, "png", new File(name + "_out.png"))
   } else {
@@ -130,6 +134,7 @@ object main extends App {
     engine.start(ITERATION_NUMBER)
 
     // Sauvegarde données pour test
+    /*
     val f = new File(name + "_" + shape_name + "_datas.csv")
     val writer = CSVWriter.open(f)
     val csvschema = List("time", "iterations", "mutations", "fitness")
@@ -140,6 +145,7 @@ object main extends App {
     }
     writer.writeAll(listRecords)
     writer.close
+    */
 
     ImageIO.write(IMAGE_BEST, "png", new File(name + "_out.png"))
   }

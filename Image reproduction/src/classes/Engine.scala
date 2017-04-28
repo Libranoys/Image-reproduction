@@ -64,6 +64,7 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
       doneSomething = true
     } else {
       DNA.copyGene(dna_b, dna_t, indexGene)
+      img_t = Utils.deepCopy(img_b)
     }
     doneSomething
 
@@ -93,13 +94,11 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
       }
       frame.repaint()
       countIteration += 1
-      /*val step = if ((iteration/1000) < 10)
-          10 
-      else 
-        iteration/1500*/
-      if(Utils.save(this.img_b, countMutation, nb_save, countIteration)) { 
+      
+      /* Si l'on veut sauvegarder des images */
+      /*if(Utils.save(this.img_b, countMutation, nb_save, countIteration)) { 
         nb_save +=1
-      }
+      }*/
       if (countIteration % 10 == 0) {
         var timeAfter= System.currentTimeMillis()
         time = time ++ List(timeAfter-timeBegin)
@@ -107,8 +106,7 @@ class Engine(dna_te: Array[Individu], dna_be: Array[Individu], img_te: BufferedI
         mutations = mutations++ List(countMutation)
         fitness = fitness ++ List((1-(fitnessBest/MAX.asInstanceOf[Float])).asInstanceOf[Double])
         println("Iteration num: " + 100 * (countIteration.toFloat / iteration.toFloat) + "% ; Mutation num: " + countMutation +" FITNESS: "+100*(1-(fitnessBest/MAX.asInstanceOf[Float]))+"%")
-      }//if(countIteration %50==0)
-      // ImageIO.write(img_b, "png", new File(countIteration + "out.png"))
+      }
     }
   }
 

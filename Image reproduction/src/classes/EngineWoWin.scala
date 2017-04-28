@@ -47,6 +47,7 @@ class EngineWoWin(dna_te: Array[Individu], dna_be: Array[Individu], img_te: Buff
       this.fitnessBest = fitnessTest
       doneSomething = true
     } else {
+      img_t = Utils.deepCopy(img_b)
       DNA.copyGene(dna_b, dna_t, indexGene)
     }
     doneSomething
@@ -68,9 +69,11 @@ class EngineWoWin(dna_te: Array[Individu], dna_be: Array[Individu], img_te: Buff
           10 
       else 
         iteration/1500*/
-      if(Utils.save(this.img_b, countMutation, nb_save, countIteration)) { 
+      
+      // Pas de save d'images
+      /*if(Utils.save(this.img_b, countMutation, nb_save, countIteration)) { 
         nb_save +=1
-      }
+      }*/
       if (countIteration % 10 == 0) {
         var timeAfter= System.currentTimeMillis()
         time = time ++ List(timeAfter-timeBegin)
